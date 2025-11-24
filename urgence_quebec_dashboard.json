@@ -1,0 +1,616 @@
+{
+    "title": "Tableau de Bord - Urgences du Québec (MSSS)",
+    "description": "Surveillance en temps réel des urgences du Québec - Données du Ministère de la Santé et des Services sociaux",
+    "inputs": {
+        "input_etablissement": {
+            "dataSources": {
+                "primary": "ds_etablissement_list"
+            },
+            "options": {
+                "defaultValue": "*",
+                "items": [
+                    {
+                        "label": "Tous",
+                        "value": "*"
+                    }
+                ],
+                "token": "etablissement_filter"
+            },
+            "title": "Établissement",
+            "type": "input.dropdown"
+        },
+        "input_time_picker": {
+            "options": {
+                "defaultValue": "-24h@h,now",
+                "token": "time_picker"
+            },
+            "title": "Période",
+            "type": "input.timerange"
+        }
+    },
+    "defaults": {
+        "dataSources": {
+            "ds.search": {
+                "options": {
+                    "queryParameters": {
+                        "earliest": "$global_time.earliest$",
+                        "latest": "$global_time.latest$"
+                    }
+                }
+            }
+        }
+    },
+    "visualizations": {
+        "viz_civieres_occupees": {
+            "dataSources": {
+                "primary": "ds_civieres_occupees"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "majorColor": "#ffffff",
+                "majorValue": "> primary | seriesByIndex(0)",
+                "showSparklineAreaGraph": false,
+                "sparklineValues": "> primary | seriesByIndex(0)",
+                "trendValue": "> primary | seriesByIndex(0)",
+                "unit": "Civières"
+            },
+            "title": "Civières Occupées (Total)",
+            "type": "splunk.singlevalue"
+        },
+        "viz_distribution": {
+            "dataSources": {
+                "primary": "ds_distribution"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "seriesColors": [
+                    "#53a051",
+                    "#0877a6",
+                    "#f8be34",
+                    "#f1813f",
+                    "#dc4e41",
+                    "#9c0824"
+                ]
+            },
+            "title": "Distribution des Taux d'Occupation",
+            "type": "splunk.pie"
+        },
+        "viz_evolution_patients_24h": {
+            "containerOptions": {},
+            "context": {},
+            "dataSources": {
+                "primary": "ds_evolution_patients_24h"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "legendDisplay": "bottom",
+                "seriesColors": [
+                    "#E91E63"
+                ],
+                "showXAxisLabel": true,
+                "showYAxisLabel": true,
+                "xAxisLabel": "Heure",
+                "yAxisLabel": "Nombre de Patients"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "Évolution des Patients >24h (Total)",
+            "type": "splunk.column"
+        },
+        "viz_evolution_patients_48h": {
+            "containerOptions": {
+                "visibility": {}
+            },
+            "dataSources": {
+                "primary": "ds_evolution_patients_48h"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "legendDisplay": "bottom",
+                "seriesColors": [
+                    "#9C27B0"
+                ],
+                "showXAxisLabel": true,
+                "showYAxisLabel": true,
+                "xAxisLabel": "Heure",
+                "yAxisLabel": "Nombre de Patients"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "Évolution des Patients >48h (Total)",
+            "type": "splunk.column"
+        },
+        "viz_evolution_taux": {
+            "containerOptions": {},
+            "dataSources": {
+                "primary": "ds_evolution_taux"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "legendDisplay": "bottom",
+                "seriesColors": [
+                    "#0877a6"
+                ],
+                "showXAxisLabel": true,
+                "showYAxisLabel": true,
+                "xAxisLabel": "Heure",
+                "yAxisLabel": "Taux d'Occupation (%)"
+            },
+            "showLastUpdated": false,
+            "showProgressBar": false,
+            "title": "Évolution du Taux d'Occupation Moyen (24h)",
+            "type": "splunk.column"
+        },
+        "viz_patients_24h": {
+            "dataSources": {
+                "primary": "ds_patients_24h"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "majorColor": "#ffffff",
+                "majorValue": "> primary | seriesByIndex(0)",
+                "rangeColors": [
+                    "#53a051",
+                    "#f8be34",
+                    "#dc4e41"
+                ],
+                "rangeValues": [
+                    50,
+                    100
+                ],
+                "showSparklineAreaGraph": false,
+                "sparklineValues": "> primary | seriesByIndex(0)",
+                "trendValue": "> primary | seriesByIndex(0)",
+                "unit": "Patients"
+            },
+            "title": "Patients > 24h (Total)",
+            "type": "splunk.singlevalue"
+        },
+        "viz_table_details": {
+            "context": {
+                "Patients24hColorEditorConfig": {
+                    "maxColor": "#DC4E41",
+                    "midColor": "#F8BE34",
+                    "midValue": 10,
+                    "minColor": "#53A051",
+                    "rangeType": "minMidMax"
+                },
+                "Patients48hColorEditorConfig": {
+                    "maxColor": "#DC4E41",
+                    "midColor": "#F8BE34",
+                    "midValue": 5,
+                    "minColor": "#53A051",
+                    "rangeType": "minMidMax"
+                },
+                "Patients__24hRowBackgroundColorsEditorConfig": [
+                    {
+                        "to": 10,
+                        "value": "#118832"
+                    },
+                    {
+                        "from": 10,
+                        "to": 50,
+                        "value": "#CBA700"
+                    },
+                    {
+                        "from": 50,
+                        "value": "#d41f1f"
+                    }
+                ],
+                "Patients__24hRowColorsEditorConfig": [
+                    "#ffffff"
+                ],
+                "Patients__48hRowBackgroundColorsEditorConfig": [
+                    {
+                        "to": 5,
+                        "value": "#118832"
+                    },
+                    {
+                        "from": 5,
+                        "to": 25,
+                        "value": "#CBA700"
+                    },
+                    {
+                        "from": 25,
+                        "value": "#d41f1f"
+                    }
+                ],
+                "Patients__48hRowColorsEditorConfig": [
+                    "#ffffff"
+                ],
+                "TauxPercentColorEditorConfig": {
+                    "maxColor": "#DC4E41",
+                    "midColor": "#F8BE34",
+                    "midValue": 90,
+                    "minColor": "#53A051",
+                    "rangeType": "minMidMax"
+                },
+                "TauxPercentFormatEditorConfig": {
+                    "number": {
+                        "precision": 1,
+                        "thousandSeparated": false,
+                        "unit": "%",
+                        "unitPosition": "after"
+                    }
+                },
+                "Taux____ColumnFormatEditorConfig": {
+                    "number": {
+                        "precision": 1,
+                        "thousandSeparated": false,
+                        "unit": "%",
+                        "unitPosition": "after"
+                    }
+                },
+                "Taux____RowBackgroundColorsEditorConfig": [
+                    {
+                        "to": 75,
+                        "value": "#118832"
+                    },
+                    {
+                        "from": 75,
+                        "to": 125,
+                        "value": "#cba700"
+                    },
+                    {
+                        "from": 125,
+                        "to": 175,
+                        "value": "#d94e17"
+                    },
+                    {
+                        "from": 175,
+                        "value": "#d41f1f"
+                    }
+                ],
+                "Taux____RowColorsEditorConfig": [
+                    "#ffffff"
+                ]
+            },
+            "dataSources": {
+                "primary": "ds_table_details"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "columnFormat": {
+                    "Patients >24h": {
+                        "rowBackgroundColors": "> table | seriesByName(\"Patients >24h\") | rangeValue(Patients__24hRowBackgroundColorsEditorConfig)",
+                        "rowColors": "> table | seriesByName('Patients >24h') | pick(Patients__24hRowColorsEditorConfig)"
+                    },
+                    "Patients >48h": {
+                        "rowBackgroundColors": "> table | seriesByName(\"Patients >48h\") | rangeValue(Patients__48hRowBackgroundColorsEditorConfig)",
+                        "rowColors": "> table | seriesByName('Patients >48h') | pick(Patients__48hRowColorsEditorConfig)"
+                    },
+                    "Taux (%)": {
+                        "data": "> table | seriesByName(\"Taux (%)\") | formatByType(Taux____ColumnFormatEditorConfig)",
+                        "rowBackgroundColors": "> table | seriesByName(\"Taux (%)\") | rangeValue(Taux____RowBackgroundColorsEditorConfig)",
+                        "rowColors": "> table | seriesByName('Taux (%)') | pick(Taux____RowColorsEditorConfig)"
+                    }
+                },
+                "count": 20,
+                "dataOverlayMode": "none",
+                "drilldown": "none"
+            },
+            "title": "Vue Détaillée - Tous les Établissements",
+            "type": "splunk.table"
+        },
+        "viz_taux_occupation": {
+            "dataSources": {
+                "primary": "ds_taux_occupation"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "majorValue": "> primary | seriesByIndex(0)",
+                "numberPrecision": 1,
+                "rangeColors": [
+                    "#53a051",
+                    "#f8be34",
+                    "#f1813f",
+                    "#dc4e41"
+                ],
+                "rangeValues": [
+                    75,
+                    90,
+                    100
+                ],
+                "showSparklineAreaGraph": false,
+                "sparklineValues": "> primary | seriesByIndex(0)",
+                "trendValue": "> primary | seriesByIndex(0)",
+                "unit": "%"
+            },
+            "title": "Taux d'Occupation Moyen",
+            "type": "splunk.singlevalue"
+        },
+        "viz_top10": {
+            "dataSources": {
+                "primary": "ds_top10"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "legendDisplay": "off",
+                "seriesColors": [
+                    "#dc4e41",
+                    "#f1813f",
+                    "#f8be34",
+                    "#0877a6",
+                    "#53a051"
+                ],
+                "showDataLabels": true,
+                "showXAxisLabel": true,
+                "showYAxisLabel": true,
+                "xAxisLabel": "Taux d'Occupation (%)",
+                "yAxisLabel": "Établissement"
+            },
+            "title": "Top 10 - Urgences les Plus Occupées (Taux %)",
+            "type": "splunk.bar"
+        },
+        "viz_total_urgences": {
+            "dataSources": {
+                "primary": "ds_total_urgences"
+            },
+            "options": {
+                "backgroundColor": "transparent",
+                "majorColor": "#ffffff",
+                "majorValue": "> primary | seriesByIndex(0)",
+                "showSparklineAreaGraph": false,
+                "sparklineValues": "> primary | seriesByIndex(0)",
+                "trendValue": "> primary | seriesByIndex(0)",
+                "unit": "Établissements"
+            },
+            "title": "Nombre Total d'Urgences",
+            "type": "splunk.singlevalue"
+        }
+    },
+    "dataSources": {
+        "ds_civieres_occupees": {
+            "name": "ds_civieres_occupees",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation\n| stats latest(Nombre_de_civieres_occupees) as occupees by No_permis_installation\n| stats sum(occupees) as total",
+                "queryParameters": {
+                    "earliest": "-60m@m",
+                    "latest": "now"
+                },
+                "refresh": "10m",
+                "refreshType": "delay"
+            },
+            "type": "ds.search"
+        },
+        "ds_distribution": {
+            "name": "ds_distribution",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\"\n| eval taux_occupation=(Nombre_de_civieres_occupees/Nombre_de_civieres_fonctionnelles)*100\n| stats latest(taux_occupation) as taux by No_permis_installation\n| eval range=case(\n    taux < 50, \"0-50%\",\n    taux < 75, \"50-75%\",\n    taux < 90, \"75-90%\",\n    taux < 100, \"90-100%\",\n    taux < 125, \"100-125%\",\n    1=1, \">125%\"\n)\n| stats count by range\n| sort range",
+                "queryParameters": {
+                    "earliest": "$time_picker.earliest$",
+                    "latest": "$time_picker.latest$"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_etablissement_list": {
+            "name": "ds_etablissement_list",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\"\n| dedup Nom_installation\n| table Nom_installation\n| sort Nom_installation",
+                "queryParameters": {
+                    "earliest": "-24h@h",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_evolution_patients_24h": {
+            "name": "ds_evolution_patients_24h",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation Mise_a_jour\n| timechart span=1h sum(Nombre_de_patients_sur_civiere_plus_de_24_heures) as \"Patients >24h\"",
+                "queryParameters": {
+                    "earliest": "$time_picker.earliest$",
+                    "latest": "$time_picker.latest$"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_evolution_patients_48h": {
+            "name": "ds_evolution_patients_48h",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation Mise_a_jour\n| timechart span=1h sum(Nombre_de_patients_sur_civiere_plus_de_48_heures) as \"Patients >48h\"",
+                "queryParameters": {
+                    "earliest": "$time_picker.earliest$",
+                    "latest": "$time_picker.latest$"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_evolution_taux": {
+            "name": "ds_evolution_taux",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation Mise_a_jour\n| eval taux_occupation=(Nombre_de_civieres_occupees/Nombre_de_civieres_fonctionnelles)*100\n| timechart span=1h avg(taux_occupation) as \"Taux Moyen (%)\" | eval \"Taux Moyen (%)\"=round('Taux Moyen (%)', 1)",
+                "queryParameters": {
+                    "earliest": "$time_picker.earliest$",
+                    "latest": "$time_picker.latest$"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_patients_24h": {
+            "name": "ds_patients_24h",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation\n| stats latest(Nombre_de_patients_sur_civiere_plus_de_24_heures) as patients_24h by No_permis_installation\n| stats sum(patients_24h) as total",
+                "queryParameters": {
+                    "earliest": "-60m@m",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_table_details": {
+            "name": "ds_table_details",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation\n| eval taux_occupation=round((Nombre_de_civieres_occupees/Nombre_de_civieres_fonctionnelles)*100, 1)\n| stats latest(Nom_installation) as \"Établissement\" \n        latest(Nombre_de_civieres_fonctionnelles) as \"Civières Fonctionnelles\" \n        latest(Nombre_de_civieres_occupees) as \"Civières Occupées\" \n        latest(taux_occupation) as \"Taux (%)\"\n        latest(Nombre_de_patients_sur_civiere_plus_de_24_heures) as \"Patients >24h\"\n        latest(Nombre_de_patients_sur_civiere_plus_de_48_heures) as \"Patients >48h\"\n        by No_permis_installation\n| table \"Établissement\" \"Civières Fonctionnelles\" \"Civières Occupées\" \"Taux (%)\" \"Patients >24h\" \"Patients >48h\"\n| sort -\"Taux (%)\"",
+                "queryParameters": {
+                    "earliest": "-60m@m",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_taux_occupation": {
+            "name": "ds_taux_occupation",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation\n| eval taux_occupation=(Nombre_de_civieres_occupees/Nombre_de_civieres_fonctionnelles)*100\n| stats latest(taux_occupation) as taux by No_permis_installation\n| stats avg(taux) as taux_moyen\n| eval taux_moyen=round(taux_moyen, 1)",
+                "queryParameters": {
+                    "earliest": "-60m@m",
+                    "latest": "now"
+                },
+                "refresh": "10m",
+                "refreshType": "delay"
+            },
+            "type": "ds.search"
+        },
+        "ds_top10": {
+            "name": "ds_top10",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\" | dedup No_permis_installation\n| eval taux_occupation=round((Nombre_de_civieres_occupees/Nombre_de_civieres_fonctionnelles)*100, 1)\n| stats latest(taux_occupation) as \"Taux Occupation (%)\" latest(Nombre_de_civieres_occupees) as \"Civières Occupées\" latest(Nombre_de_civieres_fonctionnelles) as \"Civières Fonctionnelles\" by Nom_installation\n| sort -\"Taux Occupation (%)\"\n| head 10",
+                "queryParameters": {
+                    "earliest": "-60m@m",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        },
+        "ds_total_urgences": {
+            "name": "ds_total_urgences",
+            "options": {
+                "query": "index=\"urgence_quebec\" sourcetype=\"msss:urgences:csv\" Nom_installation=\"$etablissement_filter$\"\n| dedup No_permis_installation\n| stats dc(No_permis_installation) as total",
+                "queryParameters": {
+                    "earliest": "-60m@m",
+                    "latest": "now"
+                }
+            },
+            "type": "ds.search"
+        }
+    },
+    "layout": {
+        "globalInputs": [
+            "input_time_picker",
+            "input_etablissement"
+        ],
+        "layoutDefinitions": {
+            "layout_1": {
+                "options": {
+                    "backgroundColor": "#000000",
+                    "display": "auto-scale",
+                    "height": 2000,
+                    "width": 1440
+                },
+                "structure": [
+                    {
+                        "item": "viz_total_urgences",
+                        "position": {
+                            "h": 150,
+                            "w": 360,
+                            "x": 0,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_civieres_occupees",
+                        "position": {
+                            "h": 150,
+                            "w": 360,
+                            "x": 360,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_taux_occupation",
+                        "position": {
+                            "h": 150,
+                            "w": 360,
+                            "x": 720,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_patients_24h",
+                        "position": {
+                            "h": 150,
+                            "w": 360,
+                            "x": 1080,
+                            "y": 0
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_top10",
+                        "position": {
+                            "h": 400,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 150
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_table_details",
+                        "position": {
+                            "h": 400,
+                            "w": 1440,
+                            "x": 0,
+                            "y": 540
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_evolution_patients_24h",
+                        "position": {
+                            "h": 310,
+                            "w": 690,
+                            "x": 0,
+                            "y": 950
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_evolution_patients_48h",
+                        "position": {
+                            "h": 300,
+                            "w": 740,
+                            "x": 690,
+                            "y": 950
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_evolution_taux",
+                        "position": {
+                            "h": 320,
+                            "w": 690,
+                            "x": 0,
+                            "y": 1260
+                        },
+                        "type": "block"
+                    },
+                    {
+                        "item": "viz_distribution",
+                        "position": {
+                            "h": 300,
+                            "w": 730,
+                            "x": 700,
+                            "y": 1260
+                        },
+                        "type": "block"
+                    }
+                ],
+                "type": "absolute"
+            }
+        },
+        "tabs": {
+            "items": [
+                {
+                    "label": "New tab",
+                    "layoutId": "layout_1"
+                }
+            ]
+        }
+    }
+}

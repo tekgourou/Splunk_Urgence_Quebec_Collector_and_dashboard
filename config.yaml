@@ -1,0 +1,47 @@
+# Configuration pour le collecteur de données des urgences du Québec
+# ====================================================================
+
+
+
+# Source de données
+data_source:
+  url: "https://www.msss.gouv.qc.ca/professionnels/statistiques/documents/urgences/Releve_horaire_urgences_7jours.csv"
+
+# Configuration Splunk HEC
+splunk:
+  # URL du HEC Splunk (remplacer par votre URL)
+  hec_url: "https://**YOUR-SPLUNK-SERVER**:8088/services/collector/event"
+  
+  # Token HEC (remplacer par votre token)
+  hec_token: "**YOUR-HEC-TOKEN**"
+  
+  # Index Splunk cible
+  index: "urgence_quebec"
+  
+  # Source du champ source
+  source: "urgences_quebec"
+  
+  # Sourcetype pour les données
+  sourcetype: "msss:urgences:csv"
+  
+  # Vérification SSL (mettre false si certificat auto-signé)
+  verify_ssl: false
+  
+  # Taille des batchs pour l'envoi
+  batch_size: 100
+
+# Timeout pour les requêtes HTTP (en secondes)
+timeout: 30
+
+# Logging
+logging:
+  level: "INFO"
+  file: "/var/log/urgences_quebec_collector.log"
+
+# Options de debug
+debug:
+  # Afficher le JSON envoyé à Splunk dans la console
+  print_json_output: false
+  
+  # Nombre maximum d'événements à afficher (pour éviter trop de sortie)
+  max_events_to_print: 3
