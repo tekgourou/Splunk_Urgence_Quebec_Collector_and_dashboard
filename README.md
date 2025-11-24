@@ -71,14 +71,7 @@ pyyaml
 git clone https://github.com/votre-compte/urgence-quebec-collector.git
 cd urgence-quebec-collector
 ```
-
 ### 2. Installer les dépendances Python
-
-```bash
-pip3 install -r requirements.txt
-```
-
-Ou manuellement :
 
 ```bash
 pip3 install requests pyyaml
@@ -225,28 +218,7 @@ Un dashboard pré-configuré est inclus pour visualiser les données collectées
 7. Supprimez tout le contenu JSON existant
 8. Copiez-collez le contenu complet du fichier `urgence_quebec_dashboard.json`
 9. Cliquez sur **Save**
-
-#### Méthode 2 : Installation manuelle via le système de fichiers
-
-1. Connectez-vous au serveur Splunk via SSH
-2. Copiez le fichier JSON vers le répertoire de l'application :
-
-```bash
-# Pour l'app "search" par défaut
-sudo cp urgence_quebec_dashboard.json /opt/splunk/etc/apps/search/local/data/ui/views/urgence_quebec.xml
-
-# Ou créez votre propre app
-sudo mkdir -p /opt/splunk/etc/apps/urgence_quebec/local/data/ui/views/
-sudo cp urgence_quebec_dashboard.json /opt/splunk/etc/apps/urgence_quebec/local/data/ui/views/urgence_quebec.xml
-```
-
-3. Redémarrez Splunk ou rechargez la configuration :
-
-```bash
-sudo /opt/splunk/bin/splunk reload display-app
-```
-
-4. Le dashboard sera accessible sous **Dashboards > Urgences Québec**
+10. Le dashboard sera accessible sous **Dashboards > Urgences Québec**
 
 ### Visualisations incluses
 
@@ -278,67 +250,6 @@ crontab -e
 ```
 
 Cette configuration exécutera le collecteur à chaque heure pile (00:00, 01:00, 02:00, etc.).
-
-### Avec systemd (service)
-
-Pour créer un service systemd qui s'exécute périodiquement :
-
-1. Créez le fichier de service `/etc/systemd/system/urgence-quebec-collector.service` :
-
-```ini
-[Unit]
-Description=Collecteur des données des urgences du Québec
-After=network.target
-
-[Service]
-Type=oneshot
-User=splunk
-WorkingDirectory=/opt/urgence-quebec-collector
-ExecStart=/usr/bin/python3 /opt/urgence-quebec-collector/urgence_quebec_collector.py
-StandardOutput=journal
-StandardError=journal
-
-[Install]
-WantedBy=multi-user.target
-```
-
-2. Créez le fichier timer `/etc/systemd/system/urgence-quebec-collector.timer` :
-
-```ini
-[Unit]
-Description=Timer pour le collecteur des urgences du Québec
-Requires=urgence-quebec-collector.service
-
-[Timer]
-OnCalendar=hourly
-Persistent=true
-
-[Install]
-WantedBy=timers.target
-```
-
-3. Activez et démarrez le timer :
-
-```bash
-sudo systemctl daemon-reload
-sudo systemctl enable urgence-quebec-collector.timer
-sudo systemctl start urgence-quebec-collector.timer
-```
-
-4. Vérifiez le statut :
-
-```bash
-sudo systemctl status urgence-quebec-collector.timer
-sudo systemctl list-timers
-```
-
-### Fréquence recommandée
-
-Les données du MSSS sont mises à jour toutes les heures. Il est donc recommandé d'exécuter le collecteur :
-
-- **Toutes les heures** pour des données en temps quasi réel
-- **Toutes les 2-3 heures** si vous souhaitez réduire la charge
-- **Une fois par jour** pour un historique quotidien
 
 ## Dépannage
 
@@ -434,10 +345,6 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 - Signaler des bugs
 - Proposer de nouvelles fonctionnalités
 - Soumettre des pull requests
-
-## Auteur
-
-**AdminTek** - Spécialiste en solutions de cybersécurité chez Cisco (Division Splunk)
 
 ## Support
 
