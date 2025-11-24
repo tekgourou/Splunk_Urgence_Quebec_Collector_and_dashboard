@@ -308,8 +308,6 @@ tail -f /var/log/urgences_quebec_collector.log
 # Logs de cron (si applicable)
 tail -f /var/log/urgence_quebec_cron.log
 
-# Logs systemd (si applicable)
-sudo journalctl -u urgence-quebec-collector.service -f
 ```
 
 ## Sources de données
