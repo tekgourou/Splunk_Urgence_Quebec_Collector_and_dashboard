@@ -350,6 +350,7 @@ L'ensemble de ce projet a été créé avec l'aide de Claude.ai.
 
 ## Support
 
+Ce code est fourni à titre d'exemple et devrait être validé et testé avant toute utilisation en production.
 Pour toute question ou problème :
 
 - Ouvrez une issue sur GitHub
