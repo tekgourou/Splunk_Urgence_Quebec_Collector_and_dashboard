@@ -346,6 +346,8 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 - Proposer de nouvelles fonctionnalités
 - Soumettre des pull requests
 
+L'ensemble de ce projet a été créé avec l'aide de Claude.ai.
+
 ## Support
 
 Pour toute question ou problème :
